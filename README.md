@@ -13,11 +13,11 @@ c = vector de costo reducido en la primer tabla
 
 De tal forma que creamos un objeto de la sigiente manera
 
-simplex = Simplex(A = A,b = b,c = c)
+``` simplex = Simplex(A = A,b = b,c = c) ```
 
 Despues se utiliza el metodo solucionar
 
-simplex.solucionar()
+```simplex.solucionar()```
 
 dando un resultado como el siguiente:
 
