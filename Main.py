@@ -14,7 +14,7 @@ class Simplex:
             for j in range(len(self.A[0])): # columnas
                 self.modelo[i][j] = self.A[i][j]
         # construccion de la fila de c
-        for j in range(len(self.A[0])):
+        for j in range(len(self.A[0]) + 1):
             self.modelo[-1][j] = self.c[j]
         # cosntruccion de la columna b
         for i in range(len(self.A)):
@@ -44,12 +44,12 @@ class Simplex:
             for j in range(len(self.modelo[0])):
                 # Formatear cada entrada para que tenga un ancho fijo
                 if j < len(self.modelo[0]) - 1:
-                    fila += f'{str(self.modelo[i][j]).center(ancho_columna)}'
+                    fila += f'{str(round(self.modelo[i][j], 2)).center(ancho_columna)}'
                 else:
                     if i == len(self.modelo) - 1 and j == len(self.modelo[0]) - 1:
-                        fila += f'|-z = {str(self.modelo[i][j]).center(ancho_columna)}|'
+                        fila += f'|-z = {str(round(self.modelo[i][j], 2)).center(ancho_columna)}|'
                     else:
-                        fila += f'|{str(self.modelo[i][j]).center(ancho_columna)}|'
+                        fila += f'|{str(round(self.modelo[i][j], 2)).center(ancho_columna)}|'
             
             # Imprimir la última fila con línea divisoria
             if i == len(self.modelo) - 1:
@@ -83,13 +83,15 @@ class Simplex:
         return False  # Si no se encontró pivote, retornamos None, None
 
     def pivotear(self):
-    # Volvemos 1 la fila del pivote
-        while self.encontrar_pivote() != False:
-            i, j = self.encontrar_pivote()  # Encontrar el índice del pivote
+        # Volvemos 1 la fila del pivote
+        pivote = self.encontrar_pivote()  # Encontrar el pivote inicialmente
+        while pivote != False:
+            i, j = pivote  # Usar el valor ya encontrado
 
             # Dividimos toda la fila del pivote para que el elemento pivote sea 1
+            pivote = self.modelo[i][j]
             for y in range(len(self.modelo[0])):
-                self.modelo[i][y] /= self.modelo[i][j]
+                self.modelo[i][y] = self.modelo[i][y] * (1/pivote)
 
             # Hacemos 0 en todas las demás filas de la columna del pivote
             for x in range(len(self.modelo)):
@@ -98,18 +100,22 @@ class Simplex:
                     for y in range(len(self.modelo[0])):
                         # Restamos el factor multiplicado por la fila pivote
                         self.modelo[x][y] -= factor * self.modelo[i][y]
+            
             print("\n")
             self.mostrar()
             print("\n")
+            
+            pivote = self.encontrar_pivote()  # Actualizar el pivote para la siguiente iteración
+        
         print(f'El valor de z = {self.modelo[-1][-1]*-1}')
 
 
 
 
 
-prueba = Simplex([[1,1,1,1,0,0],
-                  [0,1,1,0,1,0],
-                  [0,0,1,0,0,1]], [10,12,30],[2,3,-1,0,0,0])
+
+prueba = Simplex([[2, 1, 1, 1, 0],
+                  [1, 2, 1, 0, 1]], [6,7],[5,3,1,0,0,0])
 prueba.construir()
 prueba.encontrar_pivote()
 prueba.pivotear()
