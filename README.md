@@ -8,7 +8,9 @@ si la tabla es un caso especial el programa no lo identifica.
 La forma de uso es la siguiente:
 
 A = parte central de la primer tabla
+
 b = vector de constantes en la primer tabla
+
 c = vector de costo reducido en la primer tabla
 
 De tal forma que creamos un objeto de la sigiente manera
