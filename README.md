@@ -2,7 +2,7 @@
 Codigo para solucionar un sistema simplex.
 Autor: Kevin Cano Zepeda
 
-El codigo esta construido para recibir la primer tabla simplex, cabe resaltar que unicamente encuentra la tabla final,
+El codigo esta construido para recibir la primer tabla simplex, cabe resaltar que unicamente encuentra la tabla final, Tambien solo admite problemas de maximizacion.
 si la tabla es un caso especial el programa no lo identifica.
 
 La forma de uso es la siguiente:
@@ -13,7 +13,7 @@ b = vector de constantes en la primer tabla
 
 c = vector de costo reducido en la primer tabla
 
-De tal forma que creamos un objeto de la sigiente manera
+De tal forma que creamos un objeto de la siguiente manera
 
 ``` simplex = Simplex(A = A,b = b,c = c) ```
 
