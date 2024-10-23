@@ -85,6 +85,7 @@ class Simplex:
     def pivotear(self):
         # Volvemos 1 la fila del pivote
         pivote = self.encontrar_pivote()  # Encontrar el pivote inicialmente
+        contador = 0
         while pivote != False:
             i, j = pivote  # Usar el valor ya encontrado
 
@@ -100,14 +101,26 @@ class Simplex:
                     for y in range(len(self.modelo[0])):
                         # Restamos el factor multiplicado por la fila pivote
                         self.modelo[x][y] -= factor * self.modelo[i][y]
+
+            pivote = self.encontrar_pivote()  # Actualizar el pivote para la siguiente iteración
+            contador += 1
+            if pivote == False:
+                print('Tabla Final')
+            else:
+                print('\n')
+                print(f'Iteracion numero {contador}')
             
             print("\n")
             self.mostrar()
             print("\n")
             
-            pivote = self.encontrar_pivote()  # Actualizar el pivote para la siguiente iteración
-        
-        print(f'El valor de z = {self.modelo[-1][-1]*-1}')
+            
+        #print(f'El valor de z = {self.modelo[-1][-1]*-1}')
+    
+    def solucionar(self):
+        if self.encontrar_pivote == False:
+            raise ValueError('La tabla no tiene una primer solucion factible')
+        self.pivotear()
 
 
 
@@ -117,7 +130,5 @@ class Simplex:
 prueba = Simplex([[2, 1, 1, 1, 0],
                   [1, 2, 1, 0, 1]], [6,7],[5,3,1,0,0,0])
 prueba.construir()
-prueba.encontrar_pivote()
-prueba.pivotear()
-#prueba.mostrar()
+prueba.solucionar()
 
