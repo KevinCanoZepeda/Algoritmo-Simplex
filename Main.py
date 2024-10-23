@@ -22,8 +22,41 @@ class Simplex:
         self.mostrar()
     
     def mostrar(self):
-        for x in range(len(self.b)+1):
-            print(self.modelo[x])
+        # Definir el ancho de las columnas
+        ancho_columna = 8
+        
+        # Fila de constantes
+        fila_cte = '|'
+        for j in range(len(self.modelo[0])):
+            if j < len(self.modelo[0]) - 1:
+                fila_cte += f'{("x" + str(j + 1)).center(ancho_columna)}'
+            else:
+                fila_cte += '|  cte   |'.center(ancho_columna)
+        
+        print(fila_cte)
+        
+        # Imprimir una línea divisoria después de la fila de constantes
+        print('-' * len(fila_cte))
+        
+        # Imprimir las filas del modelo
+        for i in range(len(self.modelo)):
+            fila = '|'
+            for j in range(len(self.modelo[0])):
+                # Formatear cada entrada para que tenga un ancho fijo
+                if j < len(self.modelo[0]) - 1:
+                    fila += f'{str(self.modelo[i][j]).center(ancho_columna)}'
+                else:
+                    if i == len(self.modelo) - 1 and j == len(self.modelo[0]) - 1:
+                        fila += f'|-z = {str(self.modelo[i][j]).center(ancho_columna)}|'
+                    else:
+                        fila += f'|{str(self.modelo[i][j]).center(ancho_columna)}|'
+            
+            # Imprimir la última fila con línea divisoria
+            if i == len(self.modelo) - 1:
+                print('-' * len(fila))  # Línea de separación antes de la última fila
+            
+            print(fila)
+        print('-' * len(fila))
     
     def encontrar_pivote(self):
         i = None
